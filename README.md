@@ -1,4 +1,4 @@
-spatial_disaggregation
+Spatial_disaggregation
 ==============================
 
 A tool to spatially disaggregate EU's country level decarbonisation pathways to NUTS3 regions 
@@ -63,7 +63,7 @@ Installation steps
 
 1. Clone this repository:
     ```bash
-    git clone https://jugit.fz-juelich.de/iek-3/shared-code/localised/spatial_disaggregation.git
+    git clone https://github.com/JuanRFernandez/Spatial_Disaggregation.git
     ```
 
 2. Install dependencies and the repo in a clean conda environment:
@@ -72,21 +72,3 @@ Installation steps
     mamba env update -n zoomin_dev_env --file=requirements.yml
     conda activate zoomin_dev_env
     ```
-
-3. Additionally, for geospatial data anaylysis, geokit is used. Please install this:
-    ```bash
-    cd ..
-    git clone git@jugit.fz-juelich.de:iek-3/shared-code/geokit.git
-    cd geokit
-    pip install -e .
-    ```
-
-4. The building data comes from an in-house API client - builda. Please install this:
-    ```bash
-    cd ..
-    git clone git@jugit.fz-juelich.de:iek-3/groups/urbanmodels/personal/dabrock/builda-client.git --branch v1.0
-    cd builda-client
-    pip install -e .
-    ```
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
