@@ -72,3 +72,6 @@ Installation steps
     mamba env update -n zoomin_dev_env --file=requirements.yml
     conda activate zoomin_dev_env
     ```
+3. Python modules and Scripts are under the folder --> zoomin --> data
+
+4. Jupyter notebooks are under the folders --> notebooks --> data_preprocessing --> preprocessing 
