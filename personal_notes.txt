@@ -1,0 +1,11 @@
+## to dump data from the test db into a json file 
+
+python -Xutf8 ./manage.py dumpdata v1_api.citations > ../../tests/data/example.json
+
+## pg_dump and recreate db 
+pg_dump -U postgres zoomin_dev > test_db.tar
+# create new db named zoomin_test
+psql -d zoomin_test -U postgres < test_db.tar
+
+## run prospector
+prospector --profile .prospector.yaml

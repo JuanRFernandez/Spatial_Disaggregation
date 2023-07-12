@@ -1,0 +1,9 @@
+notebooks/reports/01_disaggregation_basics/EU_disaggregation_and_plots.ipynb filter=lfs diff=lfs merge=lfs -text
+tests/data/db_test_data.json filter=lfs diff=lfs merge=lfs -text
+notebooks/report/EU_disaggregation_and_plots.ipynb filter=lfs diff=lfs merge=lfs -text
+data_search_NUTS3/processed/land_use_land_cover_shares.csv filter=lfs diff=lfs merge=lfs -text
+data_search_NUTS3/processed/processed_CLC.csv filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.ipynb filter=lfs diff=lfs merge=lfs -text
+*.csv !text !filter !merge !diff
+*.ipynb !text !filter !merge !diff

@@ -1,0 +1,98 @@
+image: continuumio/miniconda3:latest
+
+services:
+  - name: postgis/postgis:14-3.2
+    alias: postgres
+
+stages:
+  - test
+  - deploy 
+
+test:
+  stage: test
+  variables:
+    ENV_NAME: $ENV_NAME
+    DEBUG: $DEBUG
+    SECRET_KEY: $DJANGO_SECRET_KEY
+    API_KEY: $DJANGO_API_Key
+    ALLOWED_HOSTS: $DJANGO_ALLOWED_HOSTS
+
+    POSTGRES_DB: $DB_NAME
+    POSTGRES_USER: $DB_USER
+    POSTGRES_PASSWORD: $DB_PASSWORD
+    POSTGRES_HOST_AUTH_METHOD: trust
+
+    DB_ENGINE: $DB_ENGINE
+    DB_NAME: $DB_NAME
+    DB_USER: $DB_USER
+    DB_PASSWORD: $DB_PASSWORD
+    DB_HOST: $DB_HOST
+    DB_PORT: $DB_PORT
+
+  before_script:
+    # update the system  
+    - apt-get update && apt-get upgrade --yes
+    # install basic packages
+    - apt-get install -y build-essential 
+
+    # install requirements in a new environment and activate it 
+    - conda install mamba -c conda-forge
+    - mamba env update -n $ENV_NAME --file=requirements.yml
+    - source activate $ENV_NAME
+
+  script:
+    # black format 
+    - black --check zoomin
+    - black --check tests
+    # static analysis
+    # - prospector --profile .prospector.yaml #TODO: uncomment it when prospector is working fine again
+    # tests 
+    - python -m pytest tests/
+
+  except: 
+    refs:
+      - master
+
+
+deployment:
+  stage: deploy 
+
+  variables:
+    ENV_NAME: $PROD_ENV_NAME
+    DEBUG: $PROD_DEBUG
+    SECRET_KEY: $PROD_DJANGO_SECRET_KEY
+    API_KEY: $PROD_DJANGO_API_Key
+    ALLOWED_HOSTS: $PROD_DJANGO_ALLOWED_HOSTS
+
+    DB_ENGINE: $PROD_DB_ENGINE
+    DB_NAME: $PROD_DB_NAME
+    DB_USER: $PROD_DB_USER
+    DB_PASSWORD: $PROD_DB_PASSWORD
+    DB_HOST: $PROD_DB_HOST
+    DB_PORT: $PROD_DB_PORT
+
+    DJANGO_CACHE_LOCATION: $PROD_DJANGO_CACHE_LOCATION
+    
+    SERVER_IP: $PROD_SERVER_IP
+    SERVER_USER: $PROD_SERVER_USER
+    
+  before_script: 
+    # Revoke all permissions for group and others from the private key, such that only the owner can use it. 
+    # This is a requirement, otherwise SSH refuses to work with the private key.
+    - chmod og= $id_ed25519
+    # install the openssh-client, which provides the ssh command
+    - apt-get install openssh-client
+
+  script:
+    - ssh -i $id_ed25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'bash -s' < ./run_deployment.sh $ENV_NAME $DJANGO_CACHE_LOCATION
+
+  only: 
+    refs:
+      - master
+    
+    
+ 
+    
+
+
+

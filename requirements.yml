@@ -1,0 +1,36 @@
+dependencies:
+- python=3.10
+- pip 
+- conda-forge::gdal=3.4.2
+- conda-forge::geopandas=0.11.1
+- pandas 
+- pytest 
+- conda-forge::jupyter
+- conda-forge::notebook
+- conda-forge::pyogrio
+- openpyxl
+- conda-forge::black=22.3.0 
+- conda-forge::libstdcxx-ng
+- pip:
+  - prospector[with_everything]==1.7.7
+  - python-dotenv
+  - pytest-dotenv
+  - gunicorn==20.1.0
+  - psycopg2-binary==2.9.4
+  - psycopg2==2.9.4
+  - sqlalchemy
+  - geoalchemy2
+  - django==4.1.2
+  - djangorestframework
+  - drf-yasg
+  - django-cors-headers
+  - djangorestframework-gis
+  - django-filter
+  - pytest-django
+  - django-debug-toolbar
+  - mixer 
+  - argparse
+  - dask[dataframe]
+  - eurostat==0.2.3
+  - seaborn
+  - -e .
